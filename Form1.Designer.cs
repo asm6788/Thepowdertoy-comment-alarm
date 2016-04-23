@@ -51,7 +51,7 @@
             // 
             this.pictureBox1.Location = new System.Drawing.Point(12, 30);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(505, 308);
+            this.pictureBox1.Size = new System.Drawing.Size(612, 384);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -84,21 +84,23 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(12, 344);
+            this.textBox2.Location = new System.Drawing.Point(12, 418);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox2.Size = new System.Drawing.Size(505, 112);
+            this.textBox2.Size = new System.Drawing.Size(612, 112);
             this.textBox2.TabIndex = 4;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(523, 33);
+            this.textBox3.Location = new System.Drawing.Point(638, 30);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox3.Size = new System.Drawing.Size(407, 426);
+            this.textBox3.Size = new System.Drawing.Size(407, 489);
             this.textBox3.TabIndex = 5;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // button3
             // 
@@ -172,7 +174,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(942, 458);
+            this.ClientSize = new System.Drawing.Size(1050, 531);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox4);

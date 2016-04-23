@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -81,13 +83,22 @@ namespace 파우더토이_댓글알림
             전에 = CommentText;
         }
 
+     
+
         private void button1_Click(object sender, EventArgs e)
         {
             Int();
             HttpWebRequest wReq;
             HttpWebResponse wRes;
             textBox2.Clear();
-            pictureBox1.ImageLocation = "http://static.powdertoy.co.uk/" + textBox1.Text + ".png";
+
+            WebRequest requestPic = WebRequest.Create("http://static.powdertoy.co.uk/" + textBox1.Text + ".png");
+
+            WebResponse responsePic = requestPic.GetResponse();
+
+            Image webImage = Image.FromStream(responsePic.GetResponseStream());
+
+            pictureBox1.Image = webImage;
             Uri uri = new Uri("http://powdertoy.co.uk/Browse/View.json?ID=" + textBox1.Text); // string 을 Uri 로 형변환
             wReq = (HttpWebRequest)WebRequest.Create(uri); // WebRequest 객체 형성 및 HttpWebRequest 로 형변환
             wReq.Method = "GET"; // 전송 방법 "GET" or "POST"
@@ -433,6 +444,16 @@ namespace 파우더토이_댓글알림
         {
             timer1.Stop();
             MessageBox.Show("댓글알림 정지");
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,0 +1,9 @@
+C:\Users\haha\Desktop\프로그래밍\파우더토이 댓글알림\파우더토이 댓글알림\bin\Release\파우더토이 댓글알림.exe.config
+C:\Users\haha\Desktop\프로그래밍\파우더토이 댓글알림\파우더토이 댓글알림\bin\Release\파우더토이 댓글알림.exe
+C:\Users\haha\Desktop\프로그래밍\파우더토이 댓글알림\파우더토이 댓글알림\bin\Release\파우더토이 댓글알림.pdb
+C:\Users\haha\Desktop\프로그래밍\파우더토이 댓글알림\파우더토이 댓글알림\bin\Release\System.Net.Json.dll
+C:\Users\haha\Desktop\프로그래밍\파우더토이 댓글알림\파우더토이 댓글알림\obj\Release\파우더토이_댓글알림.Form1.resources
+C:\Users\haha\Desktop\프로그래밍\파우더토이 댓글알림\파우더토이 댓글알림\obj\Release\파우더토이_댓글알림.Properties.Resources.resources
+C:\Users\haha\Desktop\프로그래밍\파우더토이 댓글알림\파우더토이 댓글알림\obj\Release\파우더토이 댓글알림.csproj.GenerateResource.Cache
+C:\Users\haha\Desktop\프로그래밍\파우더토이 댓글알림\파우더토이 댓글알림\obj\Release\파우더토이 댓글알림.exe
+C:\Users\haha\Desktop\프로그래밍\파우더토이 댓글알림\파우더토이 댓글알림\obj\Release\파우더토이 댓글알림.pdb

@@ -38,6 +38,7 @@ namespace 파우더토이_댓글알림
 
         public void Int()
         {
+            textBox3.Clear();
             HttpWebRequest wReq;
             HttpWebResponse wRes;
             int count = CommentCount + 20;
@@ -252,81 +253,37 @@ namespace 파우더토이_댓글알림
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            CommentCount += 20;
-            HttpWebRequest wReq;
-            HttpWebResponse wRes;
-            int count = CommentCount;
-            int startcount = CommentCount - 20;
-            Uri uri = new Uri("http://powdertoy.co.uk/Browse/Comments.json?ID=" + textBox1.Text + "&Start=" + startcount + "&Count=" + count); // string 을 Uri 로 형변환
-            wReq = (HttpWebRequest)WebRequest.Create(uri); // WebRequest 객체 형성 및 HttpWebRequest 로 형변환
-            wReq.Method = "GET"; // 전송 방법 "GET" or "POST"
-            wReq.ServicePoint.Expect100Continue = false;
-            wReq.CookieContainer = new CookieContainer();
-            string res = null;
-
-            using (wRes = (HttpWebResponse)wReq.GetResponse())
-            {
-                Stream respPostStream = wRes.GetResponseStream();
-                StreamReader readerPost = new StreamReader(respPostStream, Encoding.GetEncoding("EUC-KR"), true);
-
-                res = readerPost.ReadToEnd();
-            }
-            JsonTextParser parser = new JsonTextParser();
-            JsonObject obj = parser.Parse(res);
-            JsonArrayCollection col = (JsonArrayCollection)obj;
-
-            string[] Username = new string[22];
-            string[] CommentText = new string[22];
-            string[] Date = new string[22];
-            int i = 0;
-            foreach (JsonObjectCollection joc in col)
-            {
-                i++;
-                Username[i] = (string)joc["Username"].GetValue();
-                CommentText[i] = (string)joc["Text"].GetValue();
-                Date[i] = (string)joc["Timestamp"].GetValue();
-                Console.WriteLine(Username[i] + CommentText[i] + Date[i]);
-                TimeSpan t = TimeSpan.FromSeconds(Convert.ToInt32(Date[i]));
-                int hour = t.Hours + 9;
-                if (hour > 24)
-                {
-                    hour = hour - 24;
-                    if (hour >= 12)
-                        hour = hour + 12;
-                }
-                textBox3.AppendText("닉네임: " + Username[i] + "\r\n" + "날짜: " + hour + "시" + t.Minutes + "분" + t.Seconds + "초" + " 댓글: " + CommentText[i] + "\r\n\r\n");
-            }
-
-        }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            
+            CommentCount = 0;
             progressBar1.Value = 0;
             int i = 0;
-            string[] Username = new string[1000];
-            string[] CommentText = new string[1000];
-            string[] Date = new string[1000];
+            List<string> Username = new List<string>();
+            List<string> CommentText = new List<string>();
+            List<string> Date = new List<string>();
             if (totalpage == 0)
                 MessageBox.Show("불러오기 먼저 하십시요.");
             else
                 while (true)
                 {
-
                     CommentCount += 20;
                     HttpWebRequest wReq;
                     HttpWebResponse wRes;
-                    int count = CommentCount;
                     int startcount = CommentCount - 20;
-                    Uri uri = new Uri("http://powdertoy.co.uk/Browse/Comments.json?ID=" + textBox1.Text + "&Start=" + startcount + "&Count=" + count); // string 을 Uri 로 형변환
+                    Uri uri = new Uri("http://powdertoy.co.uk/Browse/Comments.json?ID=" + textBox1.Text + "&Start=" + startcount + "&Count=20"); // string 을 Uri 로 형변환
                     wReq = (HttpWebRequest)WebRequest.Create(uri); // WebRequest 객체 형성 및 HttpWebRequest 로 형변환
                     wReq.Method = "GET"; // 전송 방법 "GET" or "POST"
                     wReq.ServicePoint.Expect100Continue = false;
                     wReq.CookieContainer = new CookieContainer();
                     string res = null;
 
+                    if((i / ((double)totalpage * 20))+0.01 >=1)
+                    {
+                        progressBar1.Value = 100;
+                        goto Out;
+                    }
+                    
                     using (wRes = (HttpWebResponse)wReq.GetResponse())
                     {
                         Stream respPostStream = wRes.GetResponseStream();
@@ -344,13 +301,13 @@ namespace 파우더토이_댓글알림
                     {
                         i++;
 
-                        Console.WriteLine((double)i / (double)totalpage);
-                        progressBar1.Value = Convert.ToInt32((double)i / (double)totalpage * 100);
-                        Username[i] = (string)joc["Username"].GetValue();
-                        CommentText[i] = (string)joc["Text"].GetValue();
-                        Date[i] = (string)joc["Timestamp"].GetValue();
-                        Console.WriteLine(Username[i] + CommentText[i] + Date[i]);
-                        TimeSpan t = TimeSpan.FromSeconds(Convert.ToInt32(Date[i]));
+                        Console.WriteLine(Convert.ToInt32((i / ((double)totalpage * 20)) * 100));
+                        progressBar1.Value = Convert.ToInt32((i / ((double)totalpage * 20)) * 100);
+                        Username.Add((string)joc["Username"].GetValue());
+                        CommentText.Add((string)joc["Text"].GetValue());
+                        Date.Add((string)joc["Timestamp"].GetValue());
+                        Console.WriteLine(Username[Username.Count-1] + CommentText[CommentText.Count - 1] + Date[Date.Count - 1]);
+                        TimeSpan t = TimeSpan.FromSeconds(Convert.ToInt32(Date[Date.Count - 1]));
                         int hour = t.Hours + 9;
                         if (hour > 24)
                         {
@@ -358,11 +315,11 @@ namespace 파우더토이_댓글알림
                             if (hour >= 12)
                                 hour = hour + 12;
                         }
-                        if (i == totalpage)
+                        if (progressBar1.Value == 100)
                         {
                             goto Out;
                         }
-                        textBox3.AppendText("닉네임: " + Username[i] + "\r\n" + "날짜: " + hour + "시" + t.Minutes + "분" + t.Seconds + "초" + " 댓글: " + CommentText[i] + "\r\n\r\n");
+                        textBox3.AppendText("닉네임: " + Username[Username.Count - 1] + "\r\n" + "날짜: " + hour + "시" + t.Minutes + "분" + t.Seconds + "초" + " 댓글: " + CommentText[CommentText.Count - 1] + "\r\n\r\n");
                     }
                 }
             Out:;

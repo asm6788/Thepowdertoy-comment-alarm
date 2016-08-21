@@ -60,18 +60,18 @@ namespace 파우더토이_댓글알림
             JsonObject obj = parser.Parse(res);
             JsonArrayCollection col = (JsonArrayCollection)obj;
 
-            string[] Username = new string[22];
-            string[] CommentText = new string[22];
-            string[] Date = new string[22];
-            int i = 0;
+            List<string> Username = new List<string>();
+            List<string> CommentText = new List<string>();
+            List<DateTime> Date = new List<DateTime>();
+            List<string> Timestamp = new List<string>();
             foreach (JsonObjectCollection joc in col)
-            {
-                i++;
-                Username[i] = (string)joc["Username"].GetValue();
-                CommentText[i] = (string)joc["Text"].GetValue();
-                Date[i] = (string)joc["Timestamp"].GetValue();
-                Console.WriteLine(Username[i] + CommentText[i] + Date[i]);
-                TimeSpan t = TimeSpan.FromSeconds(Convert.ToInt32(Date[i]));
+            {   
+                Username.Add((string)joc["Username"].GetValue());
+                CommentText.Add((string)joc["Text"].GetValue());
+                Timestamp.Add((string)joc["Timestamp"].GetValue());
+                Console.WriteLine(Username[Username.Count - 1] + CommentText[CommentText.Count - 1] + Timestamp[Timestamp.Count - 1]);
+                TimeSpan t = TimeSpan.FromSeconds(Convert.ToInt32(Timestamp[Timestamp.Count - 1]));
+                Date.Add(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc) + t);
                 int hour = t.Hours + 9;
                 if (hour > 24)
                 {
@@ -79,9 +79,9 @@ namespace 파우더토이_댓글알림
                     if (hour >= 12)
                         hour = hour + 12;
                 }
-                textBox3.AppendText("닉네임: " + Username[i] + "\r\n" + "날짜: " + hour + "시" + t.Minutes + "분" + t.Seconds + "초" + " 댓글: " + CommentText[i] + "\r\n\r\n");
+                textBox3.AppendText("닉네임: " + Username[Username.Count - 1] + "\r\n" + "날짜:" + Date[Date.Count - 1].Year + "년" + Date[Date.Count - 1].Month + "월" + Date[Date.Count - 1].Day + "일" + hour + "시" + t.Minutes + "분" + t.Seconds + "초" + " 댓글: " + CommentText[CommentText.Count - 1] + "\r\n\r\n");
             }
-            전에 = CommentText;
+            전에 = CommentText.ToArray();
         }
 
      
@@ -263,7 +263,8 @@ namespace 파우더토이_댓글알림
             double temp = 0;
             List<string> Username = new List<string>();
             List<string> CommentText = new List<string>();
-            List<string> Date = new List<string>();
+            List<string> Timestamp = new List<string>();
+            List<DateTime> Date = new List<DateTime>();
             if (totalpage == 0)
                 MessageBox.Show("불러오기 먼저 하십시요.");
             else
@@ -311,9 +312,10 @@ namespace 파우더토이_댓글알림
                         progressBar1.Value = Convert.ToInt32((i / ((double)totalpage * 20)) * 100);
                         Username.Add((string)joc["Username"].GetValue());
                         CommentText.Add((string)joc["Text"].GetValue());
-                        Date.Add((string)joc["Timestamp"].GetValue());
-                        Console.WriteLine(Username[Username.Count-1] + CommentText[CommentText.Count - 1] + Date[Date.Count - 1]);
-                        TimeSpan t = TimeSpan.FromSeconds(Convert.ToInt32(Date[Date.Count - 1]));
+                        Timestamp.Add((string)joc["Timestamp"].GetValue());
+                        Console.WriteLine(Username[Username.Count-1] + CommentText[CommentText.Count - 1] + Timestamp[Timestamp.Count - 1]);
+                        TimeSpan t = TimeSpan.FromSeconds(Convert.ToInt32(Timestamp[Timestamp.Count - 1]));
+                        Date.Add(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc) + t);
                         int hour = t.Hours + 9;
                         if (hour > 24)
                         {
@@ -325,7 +327,7 @@ namespace 파우더토이_댓글알림
                         {
                             goto Out;
                         }
-                        textBox3.AppendText("닉네임: " + Username[Username.Count - 1] + "\r\n" + "날짜: " + hour + "시" + t.Minutes + "분" + t.Seconds + "초" + " 댓글: " + CommentText[CommentText.Count - 1] + "\r\n\r\n");
+                        textBox3.AppendText("닉네임: " + Username[Username.Count - 1] + "\r\n" + "날짜:"+ Date[Date.Count -1].Year +"년" + Date[Date.Count - 1].Month + "월" + Date[Date.Count - 1].Day + "일" + hour + "시" + t.Minutes + "분" + t.Seconds + "초" + " 댓글: " + CommentText[CommentText.Count - 1] + "\r\n\r\n");
                     }
                 }
             Out:;
@@ -371,18 +373,19 @@ namespace 파우더토이_댓글알림
             JsonObject obj = parser.Parse(res);
             JsonArrayCollection col = (JsonArrayCollection)obj;
 
-            string[] Username = new string[22];
-            string[] CommentText = new string[22];
-            string[] Date = new string[22];
-            int i = 0;
+            List<string> Username = new List<string>();
+            List<string> CommentText = new List<string>();
+            List<string> Timestamp = new List<string>();
+            List<DateTime> Date = new List<DateTime>();
+
             foreach (JsonObjectCollection joc in col)
             {
-                i++;
-                Username[i] = (string)joc["Username"].GetValue();
-                CommentText[i] = (string)joc["Text"].GetValue();
-                Date[i] = (string)joc["Timestamp"].GetValue();
-                Console.WriteLine(Username[i] + CommentText[i] + Date[i]);
-                TimeSpan t = TimeSpan.FromSeconds(Convert.ToInt32(Date[i]));
+                Username.Add((string)joc["Username"].GetValue());
+                CommentText.Add((string)joc["Text"].GetValue());
+                Timestamp.Add((string)joc["Timestamp"].GetValue());
+                Console.WriteLine(Username[Username.Count - 1] + CommentText[CommentText.Count - 1] + Timestamp[Timestamp.Count - 1]);
+                TimeSpan t = TimeSpan.FromSeconds(Convert.ToInt32(Timestamp[Timestamp.Count - 1]));
+                Date.Add(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc) + t);
                 int hour = t.Hours + 9;
                 if (hour > 24)
                 {
@@ -390,15 +393,13 @@ namespace 파우더토이_댓글알림
                     if (hour >= 12)
                         hour = hour + 12;
                 }
-                textBox3.AppendText("닉네임: " + Username[i] + "\r\n" + "날짜: " + hour + "시" + t.Minutes + "분" + t.Seconds + "초" + " 댓글: " + CommentText[i] + "\r\n\r\n");
             }
-
             if (전에[1] != CommentText[1])
             {              
                 notifyIcon1.Visible = true; // 트레이의 아이콘을 보이게 한다.
-                notifyIcon1.BalloonTipText = CommentText[1];
+                notifyIcon1.BalloonTipText = CommentText[0];
                 notifyIcon1.ShowBalloonTip(500);
-                전에 = CommentText;
+                전에 = CommentText.ToArray();
                 timer1.Start();
             }
         }

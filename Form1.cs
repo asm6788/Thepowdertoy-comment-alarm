@@ -256,9 +256,11 @@ namespace 파우더토이_댓글알림
 
         private void button3_Click(object sender, EventArgs e)
         {
+            textBox3.Clear();
             CommentCount = 0;
             progressBar1.Value = 0;
             int i = 0;
+            double temp = 0;
             List<string> Username = new List<string>();
             List<string> CommentText = new List<string>();
             List<string> Date = new List<string>();
@@ -278,10 +280,14 @@ namespace 파우더토이_댓글알림
                     wReq.CookieContainer = new CookieContainer();
                     string res = null;
 
-                    if((i / ((double)totalpage * 20))+0.01 >=1)
+                    if((i / ((double)totalpage * 20))+0.01 == temp)
                     {
                         progressBar1.Value = 100;
                         goto Out;
+                    }
+                    else
+                    {
+                        temp = (i / ((double)totalpage * 20)) + 0.01;
                     }
                     
                     using (wRes = (HttpWebResponse)wReq.GetResponse())

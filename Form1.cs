@@ -168,6 +168,7 @@ namespace 파우더토이_댓글알림
             제목 = View[8];
             textBox2.AppendText("설명:" + View[9] + "\r\n");
             TimeSpan t = TimeSpan.FromSeconds(Convert.ToInt32(View[11]));
+            DateTime Date = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc) + t;
             int hour = t.Hours + 9;
             if (hour > 24)
             {
@@ -175,8 +176,8 @@ namespace 파우더토이_댓글알림
                 if (hour >= 12)
                     hour = hour + 12;
             }
-           
-            textBox2.AppendText("업로드날짜:" + hour + "시" + t.Minutes + "분" + t.Seconds + "초" + "\r\n");
+
+            textBox2.AppendText("업로드날짜:"+Date.Year+ "년"+Date.Month+"월"+Date.Day+"일"+hour + "시" + t.Minutes + "분" + t.Seconds + "초" + "\r\n");
             textBox2.AppendText("제작자:" + View[12] + "\r\n");
             textBox2.AppendText("댓글개수:" + View[13] + "\r\n");
             if (Convert.ToInt32(View[13]) / 20 == 0)
